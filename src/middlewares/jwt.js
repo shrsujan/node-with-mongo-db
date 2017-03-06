@@ -40,7 +40,7 @@ let jwtmw = {
               let diff = currentTime - decoded.exp
               // log.cnsl(diff, {})
               if (diff >= 0) {
-                let token = jwt.sign({id: decoded.id, username: decoded.username, tbl_prefix: decoded.tbl_prefix}, refreshJwtSecret, {expiresIn: 60})
+                let token = jwt.sign({id: decoded.id, email: decoded.email}, refreshJwtSecret, {expiresIn: 60})
                 res.setHeader('authorization', 'Bearer ' + token)
                 res.status(401).json({
                   result: 'failure',
