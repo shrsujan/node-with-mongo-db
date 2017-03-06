@@ -41,12 +41,12 @@ let jwtmw = {
               // log.cnsl(diff, {})
               if (diff >= 0) {
                 let token = jwt.sign({id: decoded.id, username: decoded.username, tbl_prefix: decoded.tbl_prefix}, refreshJwtSecret, {expiresIn: 60})
+                res.setHeader('authorization', 'Bearer ' + token)
                 res.status(401).json({
                   result: 'failure',
                   success: 0,
                   error: 1,
                   error_msg: 'Token expired',
-                  refreshToken: token,
                   statusCode: 401,
                   errorCode: 401
                 })
