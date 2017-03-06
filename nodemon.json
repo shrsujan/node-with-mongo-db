@@ -1,0 +1,8 @@
+{
+    "verbose": false,
+    "ignore": [
+        "dist",
+        "node_modules",
+        "log"
+    ]
+}
