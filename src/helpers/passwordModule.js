@@ -26,11 +26,11 @@ export default {
         } else if (user) {
           bcrypt.compare(credentials.password, user.password, (err, res) => {
             if (res) {
-              resolve(user)
+              resolve(JSON.parse(JSON.stringify(user)))
             } else if (err) {
               reject(err)
             } else {
-              reject('passwordModule: Unexpected Error at Compare')
+              reject('Username/Password incorrect')
             }
           })
         } else {

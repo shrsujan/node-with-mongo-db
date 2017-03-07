@@ -104,12 +104,17 @@ exports.authenticate = (req, res, next) => {
     password.compare(req.loginData, User).then((data) => {
       delete data.password
       jwtsign.generateAccessToken(data).then((accessToken) => {
-        res.setHeader('authorization', 'Bearer ' + accessToken)
-        req.cdata = {
-          success: 1,
-          message: 'Login successful'
-        }
-        next()
+        jwtsign.generateRefreshToken(data).then((refreshToken) => {
+          res.setHeader('authorization', 'Bearer ' + accessToken)
+          res.setHeader('refreshtoken', 'Bearer ' + refreshToken)
+          req.cdata = {
+            success: 1,
+            message: 'Login successful'
+          }
+          next()
+        }).catch((e) => {
+          throw e
+        })
       }).catch((e) => {
         throw e
       })

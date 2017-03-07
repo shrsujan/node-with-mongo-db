@@ -11,7 +11,9 @@ let app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-jwt.authMiddleware(app)
+jwt.authMiddleware(app, [
+  '/user/list'
+])
 
 app.use('/', routes)
 
