@@ -38,7 +38,7 @@ export default {
         result: 'failure',
         success: 0,
         error: 1,
-        error_msg: err,
+        error_msg: err.message,
         statusCode: code
       })
     }

@@ -41,7 +41,7 @@ exports.register = (req, res, next) => {
         let newUser = new User(req.userData)
         newUser.save((err, data) => {
           if (err) {
-            throw err
+            next(err)
           } else {
             req.cdata = {
               success: 1,
@@ -51,10 +51,13 @@ exports.register = (req, res, next) => {
             next()
           }
         })
+      }).catch((e) => {
+        throw e
       })
     }).catch((e) => {
-      log.cnsl(e, {})
-      next(e)
+      let error = new Error(e)
+      log.cnsl(error, {})
+      next(error)
     })
   } catch (err) {
     let error = new Error(err)
@@ -119,8 +122,9 @@ exports.authenticate = (req, res, next) => {
         throw e
       })
     }).catch((e) => {
-      log.error(e, {})
-      next(e)
+      let error = new Error(e)
+      log.error(error, {})
+      next(error)
     })
   } catch (err) {
     let error = new Error(err)
