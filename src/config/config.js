@@ -20,7 +20,7 @@ export default {
   jwt: {
     jwtSecret: 'test!@#$%test',
     refreshJwtSecret: '!@#$%refresh!@#$%',
-    accessExpInMin: 2,
+    accessExpInMin: 2000,
     refreshExpInMin: 259200
   }
 }

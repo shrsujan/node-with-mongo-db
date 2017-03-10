@@ -5,7 +5,7 @@ import UserSchema from './schemas/UserSchema'
 //   return this.firstName + ' ' + this.lastName
 // })
 
-UserSchema.pre('save', function (next, done) {
+UserSchema.pre('save', function (next) {
   mongoose.models['User'].findOne({email: this.email}, (err, result) => {
     if (err) {
       next(err)
