@@ -6,7 +6,7 @@ import UserSchema from './schemas/UserSchema'
 // })
 
 UserSchema.pre('save', function (next) {
-  mongoose.models['User'].findOne({email: this.email}, (err, result) => {
+  mongoose.models['users'].findOne({email: this.email}, (err, result) => {
     if (err) {
       next(err)
     } else if (result) {
@@ -18,6 +18,6 @@ UserSchema.pre('save', function (next) {
   })
 })
 
-let User = mongoose.model('User', UserSchema)
+let User = mongoose.model('users', UserSchema)
 
 export default User

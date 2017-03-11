@@ -13,14 +13,12 @@ export default {
 
     let code = err.status || 500
 
-    if (err.message) {
-      util.log(util.format('Error [%s]: %s', req.url, err.message))
-    }
+    log.error(util.format('Error [%s]: %s', req.url, err.message || err))
 
     if (code !== 404 && code !== 403) {
       // not logging traces for 404 and 403 errors
       if (err.stack) {
-        util.log(util.inspect(err.stack))
+        log.error(util.inspect(err.stack))
       }
     }
 
@@ -37,12 +35,11 @@ export default {
     if (code === 401) {
       res.status(401).send()
     } else {
-      log.error(err.message || err, {})
       res.json({
         result: 'failure',
         success: 0,
         error: 1,
-        error_msg: err.message || err,
+        errorMsg: err.message || err,
         statusCode: code
       })
     }

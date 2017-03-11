@@ -6,9 +6,9 @@ let PostSchema = new Schema({
   content: String,
   titleImage: String,
   salary: Number,
-  userDetails: {type: Schema.Types.ObjectId, ref: 'User'},
-  locationDetails: {type: Schema.Types.ObjectId, ref: 'Location'},
-  dateTime: { type: Date, default: Date.now }
+  userDetails: {type: Schema.ObjectId, ref: 'users', default: null},
+  locationDetails: {type: Schema.ObjectId, ref: 'locations', default: null},
+  dateTime: {type: Date, default: Date.now}
 }, {
   toObject: {
     virtuals: true

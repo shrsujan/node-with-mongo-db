@@ -5,6 +5,6 @@ import LocationSchema from './schemas/LocationSchema'
 //   // mongoose.models['Location'].findOne(/* conditions - {property: value} */, cb})
 // }
 
-let Location = mongoose.model('Location', LocationSchema)
+let Location = mongoose.model('locations', LocationSchema)
 
 export default Location

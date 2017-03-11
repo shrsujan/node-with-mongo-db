@@ -5,6 +5,6 @@ import PostSchema from './schemas/PostSchema'
 //   // mongoose.models['Post'].findOne(/* conditions - {property: value} */, cb})
 // }
 
-let Post = mongoose.model('Post', PostSchema)
+let Post = mongoose.model('posts', PostSchema)
 
 export default Post

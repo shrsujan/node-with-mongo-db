@@ -56,7 +56,7 @@ exports.register = (req, res, next) => {
       })
     }).catch((e) => {
       let error = new Error(e)
-      log.cnsl(error, {})
+      log.error(error, {})
       next(error)
     })
   } catch (err) {

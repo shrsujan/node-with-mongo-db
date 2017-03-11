@@ -3,7 +3,7 @@ import config from '../config/config'
 import log from 'winston-logger-setup'
 
 mongoose.Promise = global.Promise
-mongoose.connect(config.database.connection.url, {config: {autoIndex: false}})
+mongoose.connect(config.database.connection.url)
 
 let db = mongoose.connection
 

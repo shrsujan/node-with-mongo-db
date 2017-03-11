@@ -10,7 +10,7 @@ let UserSchema = new Schema({
   password: String,
   profilePic: String,
   deviceId: String,
-  dateCreated: { type: Date, default: Date.now }
+  dateCreated: {type: Date, default: Date.now}
 }, {
   toObject: {
     virtuals: true
