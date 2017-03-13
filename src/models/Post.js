@@ -1,9 +1,12 @@
 import {mongoose} from '../foundations/mongodb'
 import PostSchema from './schemas/PostSchema'
 
-// PostSchema.pre('save', function (next, done) {
-//   // mongoose.models['Post'].findOne(/* conditions - {property: value} */, cb})
-// }
+PostSchema.pre('save', function (next) {
+  // mongoose.models['Post'].findOne(/* conditions - {property: value} */, cb})
+  this.category = this.category.toLowerCase()
+  this.subCategory = this.subCategory.toLowerCase()
+  next()
+})
 
 let Post = mongoose.model('posts', PostSchema)
 

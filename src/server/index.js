@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 jwt.authMiddleware(app, [
   '/user/list',
   '/location/*',
-  '/post/*'
+  '/job/*'
 ])
 
 /**

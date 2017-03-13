@@ -1,6 +1,7 @@
 import {Schema} from '../../foundations/mongodb'
 
 let LocationSchema = new Schema({
+  country: String,
   zip: Number,
   state: String,
   nearestBiggestCity: String,

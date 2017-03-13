@@ -45,7 +45,7 @@ export default class CollectClass {
 
   multipart (req) {
     return new Promise((resolve, reject) => {
-      if (req.method.toLowerCase() === 'post' && req.headers['content-type'] && req.headers['content-type'].substr(0, 9) === 'multipart') {
+      if ((req.method.toLowerCase() === 'post' || req.method.toLowerCase() === 'put') && req.headers['content-type'] && req.headers['content-type'].substr(0, 9) === 'multipart') {
         let form = formidable.IncomingForm()
         form.parse(req, (err, fields, files) => {
           if (err) {

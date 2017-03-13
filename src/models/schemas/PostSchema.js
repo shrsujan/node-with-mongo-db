@@ -1,8 +1,10 @@
 import {Schema} from '../../foundations/mongodb'
 
 let PostSchema = new Schema({
+  postId: String,
   title: String,
   category: String,
+  subCategory: String,
   content: String,
   titleImage: String,
   salary: Number,

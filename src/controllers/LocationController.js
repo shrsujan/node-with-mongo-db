@@ -5,6 +5,7 @@ import CollectClass from '../foundations/CollectClass'
 exports.collectToInsert = (req, res, next) => {
   let collectInstance = new CollectClass()
   collectInstance.setBody([
+    'country',
     'zip',
     'state',
     'nearestBiggestCity',
@@ -15,6 +16,7 @@ exports.collectToInsert = (req, res, next) => {
     'placeId'
   ])
   collectInstance.setMandatoryFields({
+    country: 'Country name not provided',
     zip: 'Zip code not provided',
     state: 'State not provided',
     nearestBiggestCity: 'Nearest biggest city not provided',
