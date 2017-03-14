@@ -10,6 +10,7 @@ let UserSchema = new Schema({
   password: String,
   profilePic: String,
   deviceId: String,
+  hideUserDetails: {type: Boolean, default: 0},
   dateCreated: {type: Date, default: Date.now}
 }, {
   toObject: {

@@ -28,7 +28,7 @@ let jwtmw = {
                   if (error) {
                     jwtmw.errorResponse(res, 500, 'Unexpected error: jwt middleware -> user model')
                   } else if (user) {
-                    req.user = decoded
+                    req.user = decoded.data
                     next()
                   } else {
                     jwtmw.errorResponse(res, 400, 'AccessToken: invalid token')

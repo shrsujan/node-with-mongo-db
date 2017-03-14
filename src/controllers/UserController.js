@@ -12,7 +12,8 @@ exports.collectToRegister = (req, res, next) => {
     'lastName',
     'email',
     'password',
-    'deviceId'
+    'deviceId',
+    'hideUserDetails'
   ])
   collectInstance.setFiles(['profilePic'])
   collectInstance.setMandatoryFields({
@@ -68,7 +69,7 @@ exports.register = (req, res, next) => {
 
 exports.list = (req, res, next) => {
   try {
-    User.find((err, data) => {
+    User.find({}, {password: 0}, (err, data) => {
       if (err) {
         throw err
       } else {

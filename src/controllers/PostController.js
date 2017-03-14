@@ -39,10 +39,10 @@ exports.collectToInsert = (req, res, next) => {
 
 exports.insert = (req, res, next) => {
   try {
-    User.findOne({id: req.user.id}, (err, user) => {
+    User.findOne({_id: req.user._id}, (err, user) => {
       if (err) {
         log.error(err, {})
-        next(err)
+        next(new Error('No such user'))
       } else if (user) {
         Location.findOne({
           country: req.postData.country.toLowerCase(),
@@ -76,7 +76,10 @@ exports.insert = (req, res, next) => {
                   // })
 
                   Post.find({_id: data._id})
-                  .populate('userDetails')
+                  .populate({
+                    path: 'userDetails',
+                    select: {password: 0}
+                  })
                   .populate('locationDetails')
                   .exec((err, data) => {
                     if (err || !data) {
@@ -111,7 +114,7 @@ exports.insert = (req, res, next) => {
           }
         })
       } else {
-        throw new Error('User not found')
+        next(new Error('User not found'))
       }
     })
   } catch (err) {
@@ -124,9 +127,16 @@ exports.insert = (req, res, next) => {
 exports.list = (req, res, next) => {
   try {
     Post.find()
-    .populate('userDetails')
+    .populate({
+      path: 'userDetails',
+      match: {
+        hideUserDetails: false
+      },
+      select: {password: 0}
+    })
     .populate('locationDetails')
     .exec((err, data) => {
+      console.log('1')
       if (err) {
         log.error(err)
         next(err)
@@ -185,7 +195,13 @@ exports.postInformation = (req, res, next) => {
       subCategory: req.postData.subCategory.toLowerCase(),
       postId: req.postData.postId.toLowerCase()
     })
-    .populate('userDetails')
+    .populate({
+      path: 'userDetails',
+      match: {
+        hideUserDetails: false
+      },
+      select: {password: 0}
+    })
     .populate({
       path: 'locationDetails',
       match: {
@@ -221,7 +237,10 @@ exports.deletePost = (req, res, next) => {
       subCategory: req.postData.subCategory.toLowerCase(),
       postId: req.postData.postId.toLowerCase()
     })
-    .populate('userDetails')
+    .populate({
+      path: 'userDetails',
+      select: {password: 0}
+    })
     .populate({
       path: 'locationDetails',
       match: {
@@ -294,7 +313,10 @@ exports.editInformation = (req, res, next) => {
       subCategory: req.postData.subCategory.toLowerCase(),
       postId: req.postData.postId.toLowerCase()
     })
-    .populate('userDetails')
+    .populate({
+      path: 'userDetails',
+      select: {password: 0}
+    })
     .populate({
       path: 'locationDetails',
       match: {
@@ -319,7 +341,13 @@ exports.editInformation = (req, res, next) => {
               next(err || new Error('Post not created'))
             } else {
               Post.find({_id: data._id})
-              .populate('userDetails')
+              .populate({
+                path: 'userDetails',
+                match: {
+                  hideUserDetails: false
+                },
+                select: {password: 0}
+              })
               .populate('locationDetails')
               .exec((err, data) => {
                 if (err || !data) {
