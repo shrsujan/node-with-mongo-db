@@ -35,7 +35,7 @@ export default {
     if (code === 401) {
       res.status(401).send()
     } else {
-      res.json({
+      res.status(code).json({
         result: 'failure',
         success: 0,
         error: 1,

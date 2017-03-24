@@ -28,6 +28,7 @@ exports.collectToRegister = (req, res, next) => {
     req.userData = data
     next()
   }).catch((err) => {
+    err.status = 400
     next(err)
   })
 }

@@ -102,4 +102,6 @@ server.on('listening', () => {
   log.cnslLog.debug('Listening on ' + bind, {})
 })
 
+export default app
+
 // app.listen(config.port, () => log.cnslLog.debug(`Listening on port ${config.port}`))
