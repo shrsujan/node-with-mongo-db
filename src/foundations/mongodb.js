@@ -11,7 +11,9 @@ db.on('error', () => {
   log.error('Connection error', {})
 })
 db.once('open', () => {
-  log.cnslLog.debug(`Connection established: '${config.database.connection.url}'`, {})
+  if (process.env.NODE_ENV !== 'test') {
+    log.cnslLog.debug(`Connection established: '${config.database.connection.url}'`, {})
+  }
 })
 
 exports.mongoose = db

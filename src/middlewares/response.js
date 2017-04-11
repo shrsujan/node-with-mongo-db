@@ -13,12 +13,16 @@ export default {
 
     let code = err.status || 500
 
-    log.error(util.format('Error [%s]: %s', req.url, err.message || err))
+    if (process.env.NODE_ENV !== 'test') {
+      log.error(util.format('Error [%s]: %s', req.url, err.message || err))
+    }
 
     if (code !== 404 && code !== 403) {
       // not logging traces for 404 and 403 errors
       if (err.stack) {
-        log.error(util.inspect(err.stack))
+        if (process.env.NODE_ENV !== 'test') {
+          log.error(util.inspect(err.stack))
+        }
       }
     }
 

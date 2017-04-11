@@ -100,6 +100,7 @@ exports.collectToLogin = (req, res, next) => {
     req.loginData = data
     next()
   }).catch((err) => {
+    err.status = 400
     next(err)
   })
 }

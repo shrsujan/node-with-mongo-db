@@ -99,7 +99,9 @@ server.on('listening', () => {
   let bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port
-  log.cnslLog.debug('Listening on ' + bind, {})
+  if (process.env.NODE_ENV !== 'test') {
+    log.cnslLog.debug('Listening on ' + bind, {})
+  }
 })
 
 export default app
