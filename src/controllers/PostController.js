@@ -46,7 +46,7 @@ exports.insert = (req, res, next) => {
       } else if (user) {
         Location.findOne({
           country: req.postData.country.toLowerCase(),
-          placeId: req.postData.placeId
+          placeId: req.postData.placeId.toLowerCase()
         }, (err, place) => {
           if (err) {
             log.error(err, {})
@@ -327,8 +327,9 @@ exports.editInformation = (req, res, next) => {
     })
     .exec((err, data) => {
       if (err || !data || data.locationDetails === null) {
-        log.error(err, {})
-        next(err || new Error('No such post'))
+        // log.error(err, {})
+        // next(err || new Error('No such post'))
+        exports.insertNew(req, res, next)
       } else {
         imageUpload(req.postData.titleImage, 'posts').then((filename) => {
           data.title = req.postData.title
@@ -369,6 +370,94 @@ exports.editInformation = (req, res, next) => {
           log.error(error, {})
           next(error)
         })
+      }
+    })
+  } catch (err) {
+    let error = new Error(err)
+    log.error(error, {})
+    next(error)
+  }
+}
+
+exports.insertNew = (req, res, next) => {
+  try {
+    User.findOne({_id: req.user._id}, (err, user) => {
+      if (err) {
+        log.error(err, {})
+        next(new Error('No such user'))
+      } else if (user) {
+        Location.findOne({
+          country: req.postData.country.toLowerCase(),
+          state: req.postData.state.toLowerCase(),
+          city: req.postData.city.toLowerCase()
+        }, (err, place) => {
+          if (err) {
+            log.error(err, {})
+            next(err)
+          } else if (place) {
+            imageUpload(req.postData.titleImage, 'posts').then((filename) => {
+              req.postData.titleImage = filename
+              req.postData.userDetails = user._id
+              req.postData.locationDetails = place._id
+              let newPost = new Post(req.postData)
+              newPost.save((err, data) => {
+                if (err || !data) {
+                  log.error(err, {})
+                  next(err || new Error('Post not created'))
+                } else {
+                  // Post.populate(data, {path: 'userDetails'}, (err, data) => {
+                  //   if (err) {
+                  //     throw err
+                  //   } else {
+                  //     req.cdata = {
+                  //       success: 1,
+                  //       message: 'Post inserted successfully',
+                  //       data
+                  //     }
+                  //     next()
+                  //   }
+                  // })
+
+                  Post.find({_id: data._id})
+                  .populate({
+                    path: 'userDetails',
+                    select: {password: 0}
+                  })
+                  .populate('locationDetails')
+                  .exec((err, data) => {
+                    if (err || !data) {
+                      log.error(err, {})
+                      next(err || new Error('No data'))
+                    } else {
+                      req.cdata = {
+                        success: 1,
+                        message: 'Post created successfully',
+                        data
+                      }
+                      next()
+                    }
+                  })
+
+                  // req.cdata = {
+                  //   success: 1,
+                  //   message: 'Post created successfully'
+                  // }
+                  // next()
+                }
+              })
+            }).catch((e) => {
+              let error = new Error(e)
+              log.error(error, {})
+              next(error)
+            })
+          } else {
+            let e = new Error('Place not found')
+            e.status = 400
+            next(e)
+          }
+        })
+      } else {
+        next(new Error('User not found'))
       }
     })
   } catch (err) {
