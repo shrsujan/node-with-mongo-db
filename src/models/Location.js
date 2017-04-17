@@ -8,6 +8,7 @@ LocationSchema.pre('save', function (next) {
   this.nearestBiggestCity = this.nearestBiggestCity.toLowerCase()
   this.city = this.city.toLowerCase()
   this.streetAddress = this.streetAddress.toLowerCase()
+  this.placeId = this.placeId.toLowerCase()
   next()
 })
 

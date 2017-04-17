@@ -30,6 +30,7 @@ exports.collectToInsert = (req, res, next) => {
     req.locationData = data
     next()
   }).catch((err) => {
+    err.status = 400
     next(err)
   })
 }

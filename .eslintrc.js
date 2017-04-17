@@ -5,6 +5,7 @@ module.exports = {
         "promise"
     ],
     "env": {
-      "jasmine": true
+      "jasmine": true,
+      "mocha": true
     }
 };

@@ -1,9 +1,9 @@
 import {expect} from 'chai'
 import supertest from 'supertest'
-import app from '../server/index'
+import app from '../server'
 import fs from 'fs'
 
-describe('User Api tests', function () {
+describe('User Api test', function () {
   describe('for register', function () {
     it('returns an array of errors when mandatory fields are not provided', function (done) {
       supertest(app)
