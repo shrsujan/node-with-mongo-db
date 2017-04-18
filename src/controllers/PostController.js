@@ -33,6 +33,7 @@ exports.collectToInsert = (req, res, next) => {
     req.postData = data
     next()
   }).catch((err) => {
+    err.status = 400
     next(err)
   })
 }
@@ -184,6 +185,7 @@ exports.collectToRetrieve = (req, res, next) => {
     req.postData = data
     next()
   }).catch((err) => {
+    err.status = 400
     next(err)
   })
 }
@@ -302,6 +304,7 @@ exports.collectToEdit = (req, res, next) => {
     req.postData = data
     next()
   }).catch((err) => {
+    err.status = 400
     next(err)
   })
 }

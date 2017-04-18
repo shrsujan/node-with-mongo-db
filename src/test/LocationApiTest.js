@@ -8,7 +8,7 @@ describe('Location Api test', function () {
 
   before(function (done) {
     new Promise((resolve, reject) => {
-      let testUser = {
+      let testLocation = {
         firstName: 'test',
         lastName: 'tester',
         email: 'location@test.com',
@@ -17,11 +17,11 @@ describe('Location Api test', function () {
       }
       supertest(app)
       .post('/register')
-      .field('firstName', testUser.firstName)
-      .field('lastName', testUser.lastName)
-      .field('email', testUser.email)
-      .field('password', testUser.password)
-      .field('deviceId', testUser.deviceId)
+      .field('firstName', testLocation.firstName)
+      .field('lastName', testLocation.lastName)
+      .field('email', testLocation.email)
+      .field('password', testLocation.password)
+      .field('deviceId', testLocation.deviceId)
       .attach('profilePic', 'src/test/fixtures/image.jpg')
       .expect(200)
       .end(function (err, response) {
@@ -33,11 +33,11 @@ describe('Location Api test', function () {
         expect(res).to.have.property('success', 1)
         expect(res).to.have.property('message', 'User registered successfully')
         expect(res).to.have.property('data').that.is.an('object')
-        expect(res.data).to.have.property('firstName', testUser.firstName)
-        expect(res.data).to.have.property('lastName', testUser.lastName)
-        expect(res.data).to.have.property('email', testUser.email)
+        expect(res.data).to.have.property('firstName', testLocation.firstName)
+        expect(res.data).to.have.property('lastName', testLocation.lastName)
+        expect(res.data).to.have.property('email', testLocation.email)
         expect(res.data).to.have.property('password')
-        expect(res.data).to.have.property('deviceId', testUser.deviceId)
+        expect(res.data).to.have.property('deviceId', testLocation.deviceId)
         expect(res.data).to.have.property('profilePic').that.is.a('string')
         fs.stat('src/public/images/users/' + res.data.profilePic, function (e, stats) {
           if (e) reject(e)
@@ -48,14 +48,14 @@ describe('Location Api test', function () {
         resolve()
       })
     }).then(function () {
-      let testUser = {
+      let testLocation = {
         email: 'location@test.com',
         password: 'locationtest123'
       }
       supertest(app)
       .post('/login')
-      .field('email', testUser.email)
-      .field('password', testUser.password)
+      .field('email', testLocation.email)
+      .field('password', testLocation.password)
       .expect(200)
       .end(function (err, response) {
         if (err) {
@@ -98,7 +98,7 @@ describe('Location Api test', function () {
     })
 
     it('adds new location to database', function (done) {
-      let testUser = {
+      let testLocation = {
         country: 'Nepal',
         zip: 44700,
         state: 'Bagmati',
@@ -112,7 +112,7 @@ describe('Location Api test', function () {
       supertest(app)
       .post('/location/insert')
       .set('authorization', token)
-      .send(testUser)
+      .send(testLocation)
       .expect(200)
       .end(function (err, response) {
         if (err) {
@@ -123,15 +123,15 @@ describe('Location Api test', function () {
         expect(res).to.have.property('success', 1)
         expect(res).to.have.property('message', 'Location inserted successfully')
         expect(res).to.have.property('data').that.is.an('object')
-        expect(res.data).to.have.property('country', testUser.country.toLowerCase())
-        expect(res.data).to.have.property('zip', testUser.zip)
-        expect(res.data).to.have.property('state', testUser.state.toLowerCase())
-        expect(res.data).to.have.property('nearestBiggestCity', testUser.nearestBiggestCity.toLowerCase())
-        expect(res.data).to.have.property('city', testUser.city.toLowerCase())
-        expect(res.data).to.have.property('lat', testUser.lat)
-        expect(res.data).to.have.property('long', testUser.long)
-        expect(res.data).to.have.property('streetAddress', testUser.streetAddress.toLowerCase())
-        expect(res.data).to.have.property('placeId', testUser.placeId.toLowerCase())
+        expect(res.data).to.have.property('country', testLocation.country.toLowerCase())
+        expect(res.data).to.have.property('zip', testLocation.zip)
+        expect(res.data).to.have.property('state', testLocation.state.toLowerCase())
+        expect(res.data).to.have.property('nearestBiggestCity', testLocation.nearestBiggestCity.toLowerCase())
+        expect(res.data).to.have.property('city', testLocation.city.toLowerCase())
+        expect(res.data).to.have.property('lat', testLocation.lat)
+        expect(res.data).to.have.property('long', testLocation.long)
+        expect(res.data).to.have.property('streetAddress', testLocation.streetAddress.toLowerCase())
+        expect(res.data).to.have.property('placeId', testLocation.placeId.toLowerCase())
         done()
       })
     })

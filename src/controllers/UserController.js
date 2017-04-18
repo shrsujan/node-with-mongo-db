@@ -45,6 +45,8 @@ exports.register = (req, res, next) => {
           if (err) {
             next(err)
           } else {
+            // remove password from data
+            // change for test as well
             req.cdata = {
               success: 1,
               message: 'User registered successfully',
