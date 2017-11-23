@@ -18,53 +18,6 @@ jwt.authMiddleware(app, [
   '/job/*'
 ])
 
-/**
-mongoose.connect(config.database.connection.url)
-mongoose.Promise = global.Promise
-
-let User = mongoose.model('users', {name: String})
-let Post = mongoose.model('posts', {
-  title: String,
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'users',
-    default: null
-  }
-})
-*/
-
-/**
-app.get('/add', (req, res, next) => {
-  let newUser = new User({name: 'Sujan2'})
-  newUser.save((err, data) => {
-    if (err) {
-      res.send(err)
-    } else {
-      let newPost = new Post({
-        title: 'naya3',
-        users: data._id
-      })
-      newPost.save((err, post) => {
-        if (err) {
-          res.send(err)
-        } else {
-          Post.populate(post, {path: 'users'}, (err, post) => {
-            if (err) {
-              res.send(err)
-            } else {
-              res.json({
-                success: 1,
-                post
-              })
-            }
-          })
-        }
-      })
-    }
-  })
-})
-*/
-
 app.use('/', routes)
 
 let server = http.createServer(app)
@@ -105,5 +58,3 @@ server.on('listening', () => {
 })
 
 export default app
-
-// app.listen(config.port, () => log.cnslLog.debug(`Listening on port ${config.port}`))
